@@ -90,3 +90,18 @@ User Action (Click / Input)
 ## 4. Module Graph Reference
 
 For the complete module catalog, category definitions, layer boundaries, and dependency enforcement rules, see **[MODULES.md](MODULES.md)**.
+
+## 5. FLAC Download vs Playback Boundary
+
+Lossless FLAC resolution is a **download-only** concern. It must not implement or feed the Media3 playback resolver path.
+
+The intended runtime boundary is:
+
+```
+Spotify metadata
+├── YouTube Music → Media3 → playback
+└── FLAC download provider → WorkManager → .flac file
+```
+
+The app-side download flow uses `FlacDownloadProvider`, which is consumed only by `FlacDownloadWorker`. This keeps download-source resolution separate from playback authority.
+

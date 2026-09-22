@@ -66,7 +66,7 @@ class FlacDownloadWorker(
         val quality =
             context.dataStore.getAsync(FlacDownloadQualityKey, FlacQuality.HI_RES.name).toEnum(FlacQuality.HI_RES)
 
-        val streamUrl = entryPoint.losslessStreamResolver().resolve(song, quality)
+        val streamUrl = entryPoint.flacDownloadProvider().resolve(song, quality)
         if (streamUrl == null) {
             showDownloadError(title)
             return@withContext Result.failure()
